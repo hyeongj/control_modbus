@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="en">
+ 
+<head>
+ 
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+	<title>HEALTH MONITORING OF STEAM PIPE SYSTEMS</title>
+
+	<link rel="stylesheet" href="static/bootstrap.min.css">
+	<link rel="stylesheet" href="static/main.css">
+ 
+	 <script type="text/javascript" src="static/Chart.js"></script>
+	 <script type="text/javascript" src="static/chartjs-plugin-datalabels.js"></script>
+
+	 <script type="text/javascript" src="static/jquery.min.js"></script>
+	 <script type="text/javascript" src="static/jquery.min.js"></script>
+      
+     <link rel="stylesheet" type="text/css" href="static/datatables.min.css"/>
+      <script type="text/javascript" src="static/datatables.min.js"></script>
+
+	  <script type="text/javascript" src="static/socket.io.min.js"></script>		 
+	  <script type="text/javascript" charset="utf-8" src="static/amainjs.js"></script>
+	  <script src="static/popper.min.js"></script>
+	  <script src="static/bootstrap.min.js"></script>
+
+ 
+</head>
+
+   </br>
+ 
+  
+
+		<div class="container">
+			<h2> Sensor Data Chart</h2>
+
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold"> Water Height Data</h6>
+			
+				</div>
+				
+						<div class="card-body">
+
+							<canvas id="acanvas"  width="100%" height="48"></canvas>
+							
+						</div>
+					
+						<hr>
+					
+						<p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00). Filter the graph by selecting date from the date input.</p>
+				</div><!--end Card mb-4-->	
+			</div>
+
+		</div>
+
+
+ 
+
+		<div class="container">
+			<br>
+			<h2> Sensor Data Table</h2>
+			<div class="card shadow mb-4">
+
+
+			{% for table in tables %}
+			{{ table|safe }}
+			{% endfor %}
+	 
+			</div>	
+	  <script>
+	  $(document).ready(function() {
+		$('#example').DataTable();
+	} );
+	  </script>
+
+
+	</div>
+ 
+ 
+		
+
+</body>
+</html>

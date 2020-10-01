@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+    <script src="static/popper.min.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  </head>
+   <body>
+
+      <div class="lock-container">
+         <div class="center"></div>
+            <img src="static/Ei-lock_white.svg" style="width:100px;height:100px;">
+            <h1>This content is protected</h1>
+            <p style="color:grey">To view, please enter the password.</p>
+
+         
+            <!-- <h3 class="title">Login</h3> -->
+            <div class="box">
+               <form class="form-group" action = "/client" method = "POST">
+                  <input type = "password" name = "Name" value=""/>
+                  <button class="btn btn-secondary" type="submit"><i class="fa fa-sign-in"></i></button>
+                  <!-- <input type = "submit"><i class="fa fa-sign-in" aria-hidden="true"></i> -->
+               </form>
+               
+            </div>
+        </div>
+
+      </div>
+ 
+
+  <style>
+
+   
+   .center {
+      margin: 160px 0;
+   text-align: center;
+   /* border: 3px solid green; */
+   }
+ 
+   </style>
+     
+   </body>
+
+   
+</html>
