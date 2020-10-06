@@ -49,6 +49,7 @@ socketio = SocketIO(app)
 # =====================================+
 
 def READSQLDATA(dbname):
+	# read sql database and make table
 	yy=dbname.query.all()
 	val=[[] for _ in range(10)]	
 	fmt='%B %d %H:%M'

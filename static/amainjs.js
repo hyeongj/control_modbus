@@ -80,7 +80,7 @@ $(document).ready(function(){
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: 'Date/time (Timezone - UTC, -4 ET, -7 PT)'
+                            labelString: 'Date/time (Timezone - GMT, -4 ET, -7 PT)'
                         }
                     }],
                     yAxes: [{
@@ -191,7 +191,7 @@ $(document).ready(function(){
                 },
                 scaleLabel: {
                     display: true,
-                    labelString: 'Date/time (Timezone - UTC, -4 ET, -7 PT)'
+                    labelString: 'Date/time (Timezone - GMT, -4 ET, -7 PT)'
                 }
             }],
             yAxes: [{
@@ -287,7 +287,7 @@ function TR_T_function(){
                 },
                 scaleLabel: {
                     display: true,
-                    labelString: 'Date/time (Timezone - UTC, -4 ET, -7 PT)'
+                    labelString: 'Date/time (Timezone - GMT, -4 ET, -7 PT)'
                 }
             }],
             yAxes: [{
@@ -397,7 +397,7 @@ function H_function(){
                 },
                 scaleLabel: {
                     display: true,
-                    labelString: 'Date/time (Timezone - UTC, -4 ET, -7 PT)'
+                    labelString: 'Date/time (Timezone - GMT, -4 ET, -7 PT)'
                 }
             }],
             yAxes: [{
@@ -438,8 +438,7 @@ function BOX_function(){
 
     }//end function			
 //------------------------------------------------------------------------ 
-
-
+ 
 
   
 });

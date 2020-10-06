@@ -27,6 +27,7 @@
 	  <script type="text/javascript" charset="utf-8" src="static/amainjs.js"></script>
 	  <script src="static/popper.min.js"></script>
 	  <script src="static/bootstrap.min.js"></script>
+	  <script src="static/moment.min.js"></script>
 
  
 </head>
@@ -35,17 +36,21 @@
 	<br>
 		<h1>ADVANCED HEALTH MONITORING OF STEAM PIPE SYSTEMS</h1>
 		<h2>Realtime Sensor Updates Ver.1.0</Ver> </h2>
-		<p>Date/Time: <span id="datetime"></span></p>
+		<p>Local Date/Time: <span id="datetimenow"></span></p>
+		<p>GMT Date/Time: <span id="datetimeiso"></span></p>
+
+
 	<br> 
 </div>
 	
  
+<script>
+	var now = new Date(); // Fri Feb 20 2015 19:29:31 GMT+0530 (India Standard Time) 
+	var now_utc = new Date(now.toUTCString().slice(0, -4));
+	document.getElementById("datetimenow").innerHTML = now.toLocaleString();
+	document.getElementById("datetimeiso").innerHTML = now_utc.toLocaleString();
+</script>
 
-	
-	<script>
-	var dt = new Date();
-	document.getElementById("datetime").innerHTML = dt.toLocaleString();
-	</script>
 
  
    <div class="container">
@@ -53,23 +58,22 @@
 	<h2> Sensor Data Table</h2>
 	<div class="card shadow mb-4">
 
-
+ 	
 	{% for table in tables %}
 	{{ table|safe }}
 	{% endfor %}
 	<p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00).</p>
-
 	</div>	
-<script>
-$(document).ready(function() {
-$('#example').DataTable();
-} );
-</script>
+		<script>
+		$(document).ready(function() {
+		$('#example').DataTable();
+		} );
+		</script>
+ 
+	</div>
 
+  	
 
-</div>
-
-  
 
 		<div class="container">
 			<h2> Sensor Data Chart</h2>
