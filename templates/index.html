@@ -31,8 +31,44 @@
  
 </head>
 
-   </br>
+<div class="top-container">
+	<br>
+		<h1>ADVANCED HEALTH MONITORING OF STEAM PIPE SYSTEMS</h1>
+		<h2>Realtime Sensor Updates Ver.1.0</Ver> </h2>
+		<p>Date/Time: <span id="datetime"></span></p>
+	<br> 
+</div>
+	
  
+
+	
+	<script>
+	var dt = new Date();
+	document.getElementById("datetime").innerHTML = dt.toLocaleString();
+	</script>
+
+ 
+   <div class="container">
+	<br>
+	<h2> Sensor Data Table</h2>
+	<div class="card shadow mb-4">
+
+
+	{% for table in tables %}
+	{{ table|safe }}
+	{% endfor %}
+	<p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00).</p>
+
+	</div>	
+<script>
+$(document).ready(function() {
+$('#example').DataTable();
+} );
+</script>
+
+
+</div>
+
   
 
 		<div class="container">
@@ -40,46 +76,105 @@
 
 			<div class="card shadow mb-4">
 				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold"> Water Height Data</h6>
+					<h6 class="m-0 font-weight-bold"> Acoustic Sensor Data</h6>
 			
 				</div>
 				
 						<div class="card-body">
 
-							<canvas id="acanvas"  width="100%" height="48"></canvas>
+							<canvas id="acanvas"  width="100%" height="20"></canvas>
 							
 						</div>
 					
 						<hr>
 					
-						<p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00). Filter the graph by selecting date from the date input.</p>
+						<!-- <p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00). Filter the graph by selecting date from the date input.</p> -->
 				</div><!--end Card mb-4-->	
 			</div>
 
 		</div>
 
 
- 
+	
+
 
 		<div class="container">
-			<br>
-			<h2> Sensor Data Table</h2>
-			<div class="card shadow mb-4">
-
-
-			{% for table in tables %}
-			{{ table|safe }}
-			{% endfor %}
 	 
-			</div>	
-	  <script>
-	  $(document).ready(function() {
-		$('#example').DataTable();
-	} );
-	  </script>
+
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold"> Acoustic Sensor Temperature Data</h6>
+			
+				</div>
+				
+						<div class="card-body">
+
+							<canvas id="TR_T_canvas"  width="100%" height="20"></canvas>
+							
+						</div>
+					
+						<hr>
+					
+						<!-- <p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00). Filter the graph by selecting date from the date input.</p> -->
+				</div><!--end Card mb-4-->	
+			</div>
+
+		</div>
 
 
-	</div>
+		<div class="container">
+ 
+
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold"> Electronic Box Humidity Data</h6>
+			
+				</div>
+				
+						<div class="card-body">
+
+							<canvas id="H_canvas"  width="100%" height="20"></canvas>
+							
+						</div>
+					
+						<hr>
+					
+						<!-- <p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00). Filter the graph by selecting date from the date input.</p> -->
+				</div><!--end Card mb-4-->	
+			</div>
+
+		</div>
+
+
+		
+		<div class="container">
+ 
+
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold"> Electronic Box Temperature Data</h6>
+			
+				</div>
+				
+						<div class="card-body">
+
+							<canvas id="BOX_canvas"  width="100%" height="20"></canvas>
+							
+						</div>
+					
+						<hr>
+					
+						<!-- <p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00). Filter the graph by selecting date from the date input.</p> -->
+				</div><!--end Card mb-4-->	
+			</div>
+
+		</div>
+
+
+
+ 
+
+
  
  
 		

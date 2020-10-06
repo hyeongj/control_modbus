@@ -15,16 +15,25 @@ USERCOUNT=0
 PASSWORD = 'password' 	 
 # =================
 _SQL_TIME=[]
-_SQL_VARIABLE=[]
+_SQL_VARIABLE1 = []
+_SQL_VARIABLE2 = []
+_SQL_VARIABLE3 = []
+_SQL_VARIABLE4 = []
+_SQL_VARIABLE5 = []
+_SQL_VARIABLE6 = []
+_SQL_VARIABLE7 = []
+_SQL_VARIABLE8 = []
+_SQL_VARIABLE9 = []
+
 _OBJ=None
 # ---------------------
 
 # ======================================================================================== 
 POSTGRES = {
-    'user': 'postgres',
-    'pw': 'Hoons0408!',
+    'user': 'coned_postgres',
+    'pw': 'Wz1Sc3Ac2E3ff5k4mSdE',
     'db': 'postgres',
-    'host': 'database-1.c0bhgyjg3dyh.us-east-2.rds.amazonaws.com',
+    'host': 'coned-database-1.c0bhgyjg3dyh.us-east-2.rds.amazonaws.com',
     'port': '5432',
 }
 DATABASE_URL='postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
@@ -41,33 +50,39 @@ socketio = SocketIO(app)
 
 def READSQLDATA(dbname):
 	yy=dbname.query.all()
-	val=[[] for _ in range(13)]
-	
+	val=[[] for _ in range(10)]	
 	fmt='%B %d %H:%M'
+	
 
 	for j in yy:
 		tmp=j.TIME_CREATED
 		conv=tmp.replace(microsecond=0).strftime(fmt)
 		val[0].append(conv)
-		val[1].append(j.GAIN)
-		val[2].append(j.THRES_T)
-		val[3].append(j.THRES_A)
-		val[4].append(j.RATE)
-		val[5].append(j.CHS)
-		val[6].append(j.AMP)
-		val[7].append(j.TOF)
-		val[8].append(j.HEIGHT)
-		val[9].append(j.HUMIDITY)
-		val[10].append(j.T_SBC)
-		val[11].append(j.T_MODEM)
-		val[12].append(j.T_BOX)
-
-	pydic={'Time (GMT)':val[0], 'GAIN': val[1], 'THT': val[2], 'THA': val[3], 
-			'RATE': val[4], 'CHS': val[5], 'AMP': val[6], 'TOF': val[7], 'HEIGHT': val[8], 
-			'RH': val[9], 'Temp.1' : val[10], 'Temp.2' : val[11], 
-			'Temp.3' : val[12]}
-
+		val[1].append(j.HEIGHT1)
+		val[2].append(j.HEIGHT2)
+		val[3].append(j.HEIGHT3)
+		val[4].append(j.HEIGHT4)
+		val[5].append(j.HUMIDITY)
+		val[6].append(j.BOX_TEMP)
+		val[7].append(j.SBC_TEMP)
+		val[8].append(j.TRANS1_TEMP)
+		val[9].append(j.TRANS2_TEMP)
+		
+ 
+	pydic={ 'Time (GMT)'    : val[0], 
+			'Sensor#1 (in)' : val[1],
+			'Sensor#2 (in)' : val[2],
+			'Sensor#3 (in)' : val[3],
+			'Sensor#4 (in)' : val[4],
+			'HUMIDITY (%)'  : val[5], 
+			u"Box (\u2103)" : val[6],
+			u"SBC (\u2103)" : val[7], 
+			u"TR#1 (\u2103)": val[8], 
+			u"TR#2 (\u2103)": val[9]
+			}
+ 
 	df=pd.DataFrame(pydic)
+ 
 	return df
 
 
@@ -83,18 +98,22 @@ class dbconed(db.Model):
 	CHS = db.Column(db.Integer, unique=False, nullable=True)
 	AMP = db.Column(db.Integer, unique=False, nullable=True)
 	TOF = db.Column(db.Float, unique=False, nullable=True)
-	HEIGHT = db.Column(db.Float, unique=False, nullable=True)
+	HEIGHT1 = db.Column(db.Float, unique=False, nullable=True)
+	HEIGHT2 = db.Column(db.Float, unique=False, nullable=True)
+	HEIGHT3 = db.Column(db.Float, unique=False, nullable=True)
+	HEIGHT4 = db.Column(db.Float, unique=False, nullable=True)
+	BOX_TEMP = db.Column(db.Integer, unique=False, nullable=True)
 	HUMIDITY = db.Column(db.Integer, unique=False, nullable=True)
-	T_SBC = db.Column(db.Integer, unique=False, nullable=True)
-	T_MODEM = db.Column(db.Integer, unique=False, nullable=True)
-	T_BOX = db.Column(db.Integer, unique=False, nullable=True)
+	TRANS1_TEMP = db.Column(db.Integer, unique=False, nullable=True)
+	TRANS2_TEMP = db.Column(db.Integer, unique=False, nullable=True)
+	SBC_TEMP = db.Column(db.Integer, unique=False, nullable=True)
 	WAVEFORM = db.Column(db.LargeBinary, unique=False, nullable=True)
 	
 
 	def __repr__(self):
-		return '<tbconed %r>' % self.TIME_CREATED
+		return '<tbconed %r>' % self.HUMIDITY
 
-
+# ==============================================================
 @app.route('/')
 def base():
    return render_template('base.html')
@@ -106,14 +125,24 @@ def client():
 	if client['Name'] == PASSWORD:
 		try:	
 			df=READSQLDATA(dbconed)
+			# print('success')
 			_OBJ=df.to_html(classes='tdata', header="true",table_id="example")
  
 		except:
-			pydic={'Time (GMT)':[], 'GAIN': [], 'THT': [], 'THA': [], 
-			'RATE': [], 'CHS': [], 'AMP':[], 'TOF': [], 'HEIGHT': [], 
-			'RH': [], 'Temp.1' : [], 'Temp.2' : [], 
-			'Temp.3' : []}
+			# print('failed to read')
+			pydic={ 'Time (GMT)' :[], 
+				'Sensor#1 (in)'  : [],
+				'Sensor#2 (in)'  : [],
+				'Sensor#3 (in)'  : [],
+				'Sensor#4 (in)'  : [],
+				'HUMIDITY (%)'   : [], 
+				u"Box (\u2103)"  : [],
+				u"SBC (\u2103)"  : [], 
+				u"TR#1 (\u2103)" : [], 
+				u"TR#2 (\u2103)" : []
+			}
 
+	 
 			df=pd.DataFrame(pydic)
 			_OBJ=df.to_html(classes='tdata', header="true",table_id="example")
 	 
@@ -122,26 +151,57 @@ def client():
 	else:
 		return redirect(url_for('base'))
 
-
+# ==============================================================
 
 @app.route('/historydata')
 def historydata():
 	''' This is history plot from SQL'''
-	# global tvalues, hvalues,startdate, enddate	
+	
+	df=READSQLDATA(dbconed)
+	# print( df['HEIGHT 1'])
 	try:
 		df=READSQLDATA(dbconed)
-		_SQL_TIME=df['Time (GMT)'].values.tolist()
-		_SQL_VARIABLE=df['HEIGHT'].values.tolist()	
+		_SQL_TIME	   = df['Time (GMT)'].values.tolist()
+		_SQL_VARIABLE1 = df['Sensor#1 (in)'].values.tolist()	
+		_SQL_VARIABLE2 = df['Sensor#2 (in)'].values.tolist()	
+		_SQL_VARIABLE3 = df['Sensor#3 (in)'].values.tolist()	
+		_SQL_VARIABLE4 = df['Sensor#4 (in)'].values.tolist()
+		_SQL_VARIABLE5 = df['Box (\u2103)'].values.tolist()
+		_SQL_VARIABLE6 = df['HUMIDITY (%)'].values.tolist()
+		_SQL_VARIABLE7 = df['SBC (\u2103)'].values.tolist()	
+		_SQL_VARIABLE8 = df['TR#1 (\u2103)'].values.tolist()	
+		_SQL_VARIABLE9 = df['TR#2 (\u2103)'].values.tolist()			
+ 
 	
 	except:
 		_SQL_TIME=[]
-		_SQL_VARIABLE=[]
+		_SQL_VARIABLE1=[]
+		_SQL_VARIABLE2=[]
+		_SQL_VARIABLE3=[]
+		_SQL_VARIABLE4=[]
+		_SQL_VARIABLE5=[]
+		_SQL_VARIABLE6=[]
+		_SQL_VARIABLE7=[]
+		_SQL_VARIABLE8=[]
+		_SQL_VARIABLE9=[]
 
-	jsontable = {'Date': _SQL_TIME, 'height': _SQL_VARIABLE}
+	jsontable = {
+				'Date': _SQL_TIME, 
+				'HEIGHT1': _SQL_VARIABLE1, 
+				'HEIGHT2': _SQL_VARIABLE2, 
+				'HEIGHT3': _SQL_VARIABLE3, 
+				'HEIGHT4': _SQL_VARIABLE4,
+				'BOX_TEMP': _SQL_VARIABLE5, 
+				'HUMIDITY': _SQL_VARIABLE6, 
+				'SBC_TEMP': _SQL_VARIABLE7,
+				'TRANS_TEMP1': _SQL_VARIABLE8, 
+				'TRANS_TEMP2': _SQL_VARIABLE9, 
+				}
+	 
 	return jsonify(jsontable)
  
 
-# ==============================================
+# ====Count connect user number==========================================
 @socketio.on('connect', namespace='/test')
 def test_connect(): 
 	global USERCOUNT
