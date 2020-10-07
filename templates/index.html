@@ -45,10 +45,17 @@
 	
  
 <script>
+	
+
+function updateTime(){
 	var now = new Date(); // Fri Feb 20 2015 19:29:31 GMT+0530 (India Standard Time) 
 	var now_utc = new Date(now.toUTCString().slice(0, -4));
 	document.getElementById("datetimenow").innerHTML = now.toLocaleString();
 	document.getElementById("datetimeiso").innerHTML = now_utc.toLocaleString();
+	}
+
+	setInterval(updateTime, 1000);
+
 </script>
 
 
