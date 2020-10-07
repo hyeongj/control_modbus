@@ -196,11 +196,11 @@ $(document).ready(function(){
             }],
             yAxes: [{
                 display: true,
-                ticks: {
-                    fontSize: 10,
-                    min: 30,
-                    max: 300
-                },
+                // ticks: {
+                //     fontSize: 10,
+                //     min: 30,
+                //     // max: 300
+                // },
                 scaleLabel: {
                     display: true,
                     labelString: 'Temperature (\u2103)'
