@@ -23,7 +23,7 @@ $(document).ready(function(){
                     radius: 2, 
                     label: "Probe #2",
                     backgroundColor: 'rgb(145, 177, 191,0.5)',
-                    borderColor: 'rgb(100, 27, 27)',
+                    borderColor: 'rgb(50, 168, 74)',
                     borderWidth: 1,
                     data: [],
                     

@@ -50,7 +50,10 @@ socketio = SocketIO(app)
 
 def READSQLDATA(dbname):
 	# read sql database and make table
-	yy=dbname.query.all()
+	# order_by(desc(MyEntity.time)
+	# yy=dbname.query.all()
+	yy=dbname.query.order_by(dbname.TIME_CREATED.desc())
+	
 	val=[[] for _ in range(10)]	
 	fmt='%B %d %H:%M'
 	
@@ -83,6 +86,7 @@ def READSQLDATA(dbname):
 			}
  
 	df=pd.DataFrame(pydic)
+	
  
 	return df
 
@@ -124,29 +128,9 @@ def client():
 	if request.method == 'POST':
 		client = request.form
 	if client['Name'] == PASSWORD:
-		try:	
-			df=READSQLDATA(dbconed)
-			# print('success')
-			_OBJ=df.to_html(classes='tdata', header="true",table_id="example")
- 
-		except:
-			# print('failed to read')
-			pydic={ 'Time (GMT)' :[], 
-				'Sensor#1 (in)'  : [],
-				'Sensor#2 (in)'  : [],
-				'Sensor#3 (in)'  : [],
-				'Sensor#4 (in)'  : [],
-				'HUMIDITY (%)'   : [], 
-				u"Box (\u2103)"  : [],
-				u"SBC (\u2103)"  : [], 
-				u"TR#1 (\u2103)" : [], 
-				u"TR#2 (\u2103)" : []
-			}
-
-	 
-			df=pd.DataFrame(pydic)
-			_OBJ=df.to_html(classes='tdata', header="true",table_id="example")
-	 
+		# try:	
+		df=READSQLDATA(dbconed)
+		_OBJ=df.to_html(classes='tdata', header="true",table_id="sqltable")
  
 		return render_template("index.html", tables=[_OBJ])
 	else:
@@ -159,9 +143,9 @@ def historydata():
 	''' This is history plot from SQL'''
 	
 	df=READSQLDATA(dbconed)
+	df=df.sort_values(by=['Time (GMT)'])
 	# print( df['HEIGHT 1'])
 	try:
-		df=READSQLDATA(dbconed)
 		_SQL_TIME	   = df['Time (GMT)'].values.tolist()
 		_SQL_VARIABLE1 = df['Sensor#1 (in)'].values.tolist()	
 		_SQL_VARIABLE2 = df['Sensor#2 (in)'].values.tolist()	
