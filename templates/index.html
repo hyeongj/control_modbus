@@ -29,7 +29,9 @@
 	<h2> Modbus Connection & Device Control</h2>
 
 	<p class="fa fa-server fa-lg" id="demo"></p>
-	
+	<p id="_SQL_CONN">...</p>	
+	<p id="countstate">...</p>	
+ 
 	<div class="row">
 
 		
@@ -58,7 +60,8 @@
 		</div>
 
 	</div>
-	<p id="countstate">...</p>
+	
+	
 	<br>
 
 	<div class = "row">
@@ -132,7 +135,23 @@
 		</div>
 	</div>
 
-	 
+	<div class="container">
+		<br>
+		<div class = "row">
+			<form id="BUFFER0" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="BUFFER0"> BUFFER (1000)</button>
+			</form>
+			<form id="BUFFER1" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="BUFFER1"> BUFFER (2000)</button>
+		</form>
+		<form id="BUFFER2" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="BUFFER2"> BUFFER (4000)</button>
+		</form>
+		<form id="BUFFER3" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="BUFFER3"> BUFFER (8000)</button>
+		</form>
+		</div>
+	</div> 
 
 	<div class="container">
 		<br>
@@ -148,6 +167,19 @@
 			<button class="btn btn-secondary" input type="submit" name="submit" value="REBOOT"> REBOOT</button>
 			</form>
 
+			<form id="SQLcon" method="POST" action='#'>
+				<button class="btn btn-secondary" input type="submit" name="submit" value="SQLcon"> SQL Connect</button>
+				</form>
+			
+				<form id="SQLdcon" method="POST" action='#'>
+					<button class="btn btn-secondary" input type="submit" name="submit" value="SQLdcon"> SQL Disconnect</button>
+					</form>
+			
+					
+		<form id="matplot" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="matplot"> MatPLOT</button>
+			</form>
+			
 		</div>
 	</div>
 	
@@ -180,9 +212,20 @@
 	</form> -->
 
 	<p id="sendstate">...</p>
+ 
 	
+
+
+	<div class="container">
+		<!-- {% if resultfig != None %} -->
+		<img id="img" src="" />
+			<!-- {% endif %} -->
+		</div>
+
+
 	<hr>
 
+	<br>
 
 	  <h2> Real Time Sensor Data Reading</h2>
 
@@ -192,6 +235,12 @@
 
 				<p style="font-weight: bold; font-size:18px">System Information </p>
 				<div class="row">
+					<div class="col">
+						<p>Gain: </p>
+						<p id="_gain">...</p>
+					</div>
+
+
 					<div class="col">
 						<p>Rate: </p>
 						<p id="_rate">...</p>
@@ -215,24 +264,31 @@
 
 			<div class="container">
 				<p style="font-weight: bold; font-size:18px">Pulser/Receiver </p>
-					<div class="row">
+				<div class="row">
 								
-					<div class="col">
-						<p>Gain: </p>
-						<p id="_gain">...</p>
-					</div>
-
 					<div class="col">
 						<p>Thres. Time: </p>
 						<p id="_time_in">...</p>
 					</div>
 
+
 					<div class="col">
-						<p>Thres. Amp.: </p>
+						<p>Thres. Amp: </p>
 						<p id="_maxth">...</p>
-					<div>
 					</div>
+
+					<div class="col">
+						<p>Sel. CH.: </p>
+						<p id="_sel_channel">...</p>
+					</div>
+					<div class="col">
+						<p>Sel. Amp.: </p>
+						<p id="_sel_amp">...</p>
+					</div>
+	 
+						
 				</div>
+			</div>
 
 
 			<div class="container">
@@ -278,17 +334,17 @@
 				</div>
 
 				<div class="col">
-					<p>Temp 1: </p>
+					<p>Box Temp: </p>
 					<p id="_temp1">...</p>
 				</div>
 
 				<div class="col">
-					<p>Temp 2: </p>
+					<p>TRANS. #1 Temp: </p>
 					<p id="_temp2">...</p>		
 				</div>
 					
 				<div class="col">
-					<p>Temp 3: </p>
+					<p>TRANS. #2 Temp: </p>
 					<p id="_temp3">...</p>
 				</div>
 			</div>

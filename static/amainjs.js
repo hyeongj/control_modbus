@@ -73,6 +73,23 @@ $(document).ready(function(){
         return false;
         });
 
+        $('form#BUFFER0').submit(function(event) {
+            socket.emit('BUFFER0_request');
+            return false;
+            });
+        $('form#BUFFER1').submit(function(event) {
+            socket.emit('BUFFER1_request');
+            return false;
+            });
+        $('form#BUFFER2').submit(function(event) {
+            socket.emit('BUFFER2_request');
+            return false;
+            });
+        $('form#BUFFER3').submit(function(event) {
+            socket.emit('BUFFER3_request');
+            return false;
+            });
+
     $('form#ch0').submit(function(event) {
         socket.emit('ch0_request');
         return false;
@@ -108,6 +125,19 @@ $(document).ready(function(){
         return false;
         });	
         
+    $('form#matplot').submit(function(event) {
+        socket.emit('matplot_request');
+        return false;
+        });	
+    
+    $('form#SQLcon').submit(function(event) {
+        socket.emit('SQL_request');
+        return false;
+        });	
+    $('form#SQLdcon').submit(function(event) {
+        socket.emit('SQL_d_request');
+        return false;
+        });	
 //    ============================
  
         
@@ -124,18 +154,8 @@ $(document).ready(function(){
         clearInterval(myVar);
         return false;
     });
-
-$('form#savere').submit(function(event) {
-socket.emit('save_request');
-return false;
-});
-
-$('form#check').submit(function(event) {
-   socket.emit('my_check_request', {checkbox: $('#checkbox').prop('checked')});
-   return false;
-   });
-
-
+ 
+ 
 
 $('form#emit').submit(function(event) {
     // modbus connection script get the value from the input from in html
@@ -143,7 +163,7 @@ $('form#emit').submit(function(event) {
     return false;
 });
 
-
+ 
 
 
 $('form#broadcast').submit(function(event) {
@@ -154,7 +174,6 @@ $('form#broadcast').submit(function(event) {
 
 $('form#sqlsend').submit(function(event)
 {
-    // SQL script
     socket.emit('sqlsend_event_request', {data: $('#sqlsend_data').val()});
     return false;
 });
@@ -174,11 +193,19 @@ socket.on('my_send_response', function(msg) {
     });
 
 
+socket.on('my_sql_response', function(msg) {
+    var sqlmessage=msg.data;
+    $('#_sqlimage').html(msg.data); 
+    url="data:image/png;base64,"+sqlmessage
+    document.getElementById("img").setAttribute (
+        'src', url
+    );    
+    });
+
 
 
 socket.on('my_count_response', function(msg) {
     $('#countstate').html(msg.data);
-
     });
     
 
@@ -209,25 +236,26 @@ $('form#database_emit').submit(function(event) {
 });
 
 
-        socket.on('my_rate_response', function(msg) {
-            $('#_speed').html(msg._speed);
-            $('#_gain').html(msg._gain);
-            $('#_time_in').html(msg._time_in);
-            $('#_maxth').html(msg._maxth);
-            $('#_rate').html(msg._rate);
-            $('#_buffer').html(msg._buffer);
-            $('#_sel_channel').html(msg._sel_channel);
-            $('#_sel_amp').html(msg._sel_amp);
-            $('#_height1').html(msg._height1);
-            $('#_height2').html(msg._height2);
-            $('#_height3').html(msg._height3);
-            $('#_height4').html(msg._height4);
-            $('#_humidity').html(msg._humidity);
-            $('#_temp1').html(msg._temp1);
-            $('#_temp2').html(msg._temp2);
-            $('#_temp3').html(msg._temp3);
-            $('#_CNT_THRESHOLD').html(msg._CNT_THRESHOLD);
-        });
+    socket.on('my_rate_response', function(msg) {
+        $('#_speed').html(msg._speed);
+        $('#_gain').html(msg._gain);
+        $('#_time_in').html(msg._time_in);
+        $('#_maxth').html(msg._maxth);
+        $('#_rate').html(msg._rate);
+        $('#_buffer').html(msg._buffer);
+        $('#_sel_channel').html(msg._sel_channel);
+        $('#_sel_amp').html(msg._sel_amp);
+        $('#_height1').html(msg._height1);
+        $('#_height2').html(msg._height2);
+        $('#_height3').html(msg._height3);
+        $('#_height4').html(msg._height4);
+        $('#_humidity').html(msg._humidity);
+        $('#_temp1').html(msg._temp1);
+        $('#_temp2').html(msg._temp2);
+        $('#_temp3').html(msg._temp3);
+        $('#_CNT_THRESHOLD').html(msg._CNT_THRESHOLD);
+        $('#_SQL_CONN').html(msg._SQL_CONN);
+    });
 
 
   

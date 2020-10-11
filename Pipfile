@@ -11,6 +11,9 @@ pymodbus = {extras = ["twisted"],version = "*"}
 eventlet = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
+sqlalchemy = "*"
+numpy = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"
