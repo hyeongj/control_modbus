@@ -4,6 +4,9 @@ from flask_socketio import SocketIO, emit, disconnect
 import os, sys, time
 import json 
 from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+
+import eventlet
+eventlet.monkey_patch() 
 #===global variables==============================
 
 
