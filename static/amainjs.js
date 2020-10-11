@@ -4,441 +4,231 @@ $(document).ready(function(){
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
     
     //------------------------------------------------------------------------ 
-        const aconfig={
-                        
-            type: 'line',
-            data: {
-                
-                labels: [],
-                datasets: [{
-                    radius: 2, 
-                    label: "Probe #1",
-                    backgroundColor: 'rgb(145, 177, 191,0.5)',
-                    borderColor: 'rgb(38, 27, 27)',
-                    borderWidth: 1,
-                    data: [],
-                    
-                    fill: false
-                },{
-                    radius: 2, 
-                    label: "Probe #2",
-                    backgroundColor: 'rgb(145, 177, 191,0.5)',
-                    borderColor: 'rgb(50, 168, 74)',
-                    borderWidth: 1,
-                    data: [],
-                    
-                    fill: false
-                },{
-                    radius: 2, 
-                    label: "Probe #3",
-                    backgroundColor: 'rgb(145, 177, 191,0.5)',
-                    borderColor: 'rgb(250, 27, 27)',
-                    borderWidth: 1,
-                    data: [],
-                    
-                    fill: false
-                },{
-                    radius: 2, 
-                    label: "Probe #4",
-                    backgroundColor: 'rgb(145, 177, 191,0.5)',
-                    borderColor: 'rgb(38, 27, 250)',
-                    borderWidth: 1,
-                    data: [],
-                    
-                    fill: false
-                }],
-            },
+    
+    $('form#starton').submit(function(event) {
+        socket.emit('start_request');
+        return false;
+        });
+
+    $('form#init').submit(function(event) {
+        socket.emit('init_request');
+        return false;
+        });	
+
+
+    $('form#gain0').submit(function(event) {
+        socket.emit('gain0_request');
+        return false;
+        });
+    $('form#gain1').submit(function(event) {
+        socket.emit('gain1_request');
+        return false;
+        });
+        
+
+    $('form#amp0').submit(function(event) {
+        socket.emit('amp0_request');
+        return false;
+        });
+    $('form#amp1').submit(function(event) {
+        socket.emit('amp1_request');
+        return false;
+        });
+        
             
 
-            options: {
-                responsive: true, 
-                // maintainAspectRatio: false,
-                 
-                legend: {
-                    display: true
-                },
-                title: {
-                    display: false,
-                    text: 'Water Height Data'
-                },
-                plugins: {
-                    datalabels: {
-                        display:false,
+    $('form#ttime0').submit(function(event) {
+        socket.emit('ttime0_request');
+        return false;
+        });
+    $('form#ttime1').submit(function(event) {
+        socket.emit('ttime1_request');
+        return false;
+        });	
 
-                    },
-                
-                },
-
-             
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        ticks: {
-                            fontSize: 10,
-                            autoSkip: true,
-                            maxTicksLimit:15
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Date/time (Timezone - GMT, -4 ET, -7 PT)'
-                        }
-                    }],
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            fontSize: 10,
-                            min: 0,
-                            max: 15
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Water height (in)'
-                        }}]
-                        }
-                                
-                }
-                
-            };
-
-
-        const awavex = document.getElementById('acanvas').getContext('2d');
-        const awaveChart = new Chart(awavex,aconfig );
-        Chart.defaults.global.defaultFontSize = 14;
-
-        var myChart = setInterval(aupdateWAVE, 1000);
-
-        function aupdateWAVE(){
-            var getData = $.get('/historydata');
-            getData.done(function(results){
-                // 
-                var xv=results.yvalue
-                aconfig.data.labels=results.Date;
-                aconfig.data.datasets[0].data=results.HEIGHT1;
-                aconfig.data.datasets[1].data=results.HEIGHT2;
-                aconfig.data.datasets[2].data=results.HEIGHT3;
-                aconfig.data.datasets[3].data=results.HEIGHT4;
-                awaveChart.update();
-                
+        $('form#sinterval0').submit(function(event) {
+            socket.emit('sinterval0_request');
+            return false;
             });
+        $('form#sinterval1').submit(function(event) {
+            socket.emit('sinterval1_request');
+            return false;
+            });	
 
-            }//end function			
- //------------------------------------------------------------------------ 
+        // =======================
+    $('form#rate0').submit(function(event) {
+        socket.emit('rate0_request');
+        return false;
+        });
+    $('form#rate1').submit(function(event) {
+        socket.emit('rate1_request');
+        return false;
+        });
+    $('form#rate2').submit(function(event) {
+        socket.emit('rate2_request');
+        return false;
+        });
+    $('form#rate3').submit(function(event) {
+        socket.emit('rate3_request');
+        return false;
+        });
 
+    $('form#ch0').submit(function(event) {
+        socket.emit('ch0_request');
+        return false;
+        });
+    $('form#ch1').submit(function(event) {
+        socket.emit('ch1_request');
+        return false;
+        });
+    $('form#ch2').submit(function(event) {
+        socket.emit('ch2_request');
+        return false;
+        });
+    $('form#ch3').submit(function(event) {
+        socket.emit('ch3_request');
+        return false;
+        });
 
-
-  //------------Transducer temperature data chart------------------------------------------------------------ 
-  const TR_T_config={
-                        
-    type: 'line',
-    data: {
         
-        labels: [],
-        datasets: [{
-            radius: 2, 
-            label: "NTC Sensor #1",
-            backgroundColor: 'rgb(38, 27, 27)',
-            borderColor: 'rgb(38, 27, 27)',
-            data: [],
-            fill: false,
-            borderWidth:0.5
-        },{
-            radius: 2, 
-            label: "NTC Sensor #2",
-            backgroundColor: 'rgb(38, 27, 27)',
-            borderColor: 'rgb(45, 230, 97)',
-            data: [],
-            fill: false,
-            borderWidth:0.5
-        }],
-    },
+
+    // ===========================================
+    $('form#graph').submit(function(event) {
+        socket.emit('graph_request');
+        return false;
+        });	
     
-
-    options: {
-        responsive: true, 
-        // maintainAspectRatio: false,
-         
-        legend: {
-            display: true
-        },
-        title: {
-            display: false,
-            text: 'Temperature'
-        },
-        tooltips: {
-            mode: 'index',
-            intersect: true,
-        },
-        hover: {
-            mode: 'nearest',
-            intersect: true
-        },
-        plugins: {
-            datalabels: {
-                display:false,
-
-            },
+    $('form#graphoff').submit(function(event) {
+        socket.emit('graphoff_request');
+        return false;
+        });	
         
-        },
-
-     
-        scales: {
-            xAxes: [{
-                display: true,
-                ticks: {
-                    fontSize: 10,
-                    autoSkip: true,
-                    maxTicksLimit:15
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Date/time (Timezone - GMT, -4 ET, -7 PT)'
-                }
-            }],
-            yAxes: [{
-                display: true,
-                // ticks: {
-                //     fontSize: 10,
-                //     min: 30,
-                //     // max: 300
-                // },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Temperature (\u2103)'
-                }}]
-                }
-                        
-        }
+    $('form#REBOOT').submit(function(event) {
+        socket.emit('REBOOT_request');
+        return false;
+        });	
         
-    };
-
-
-const TR_T_wavex = document.getElementById('TR_T_canvas').getContext('2d');
-const TR_T_waveChart = new Chart(TR_T_wavex,TR_T_config );
-Chart.defaults.global.defaultFontSize = 14;
-
-var myChart = setInterval(TR_T_function, 1000);
-
-function TR_T_function(){
-    var getData = $.get('/historydata');
-    getData.done(function(results){
-        // 
-        var xv=results.yvalue
-        TR_T_config.data.labels=results.Date;
-        TR_T_config.data.datasets[0].data=results.TRANS_TEMP1;
-        TR_T_config.data.datasets[1].data=results.TRANS_TEMP2;
-        TR_T_waveChart.update();
-        
-    });
-
-    }//end function			
-//------------------------------------------------------------------------ 
-
- //------------Humidity------------------------------------------------------------ 
- const H_config={
-                        
-    type: 'line',
-    data: {
-        
-        labels: [],
-        datasets: [{
-            radius: 1, 
-            backgroundColor: 'rgb(145, 177, 191,0.5)',
-            borderColor: 'rgb(38, 27, 27)',
-            borderWidth: 1,
-            data: [],
-            
-            fill: true
-        }],
-    },
-    
-
-    options: {
-        responsive: true, 
-        // maintainAspectRatio: false,
-         
-        legend: {
-            display: false
-        },
-  
-        tooltips: {
-            mode: 'index',
-            intersect: true,
-        },
-        hover: {
-            mode: 'nearest',
-            intersect: true
-        },
-        plugins: {
-            datalabels: {
-                display:false,
-
-            },
-        
-        },
-
-     
-        scales: {
-            xAxes: [{
-                display: true,
-                ticks: {
-                    fontSize: 10,
-                    autoSkip: true,
-                    maxTicksLimit:15
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Date/time (Timezone - GMT, -4 ET, -7 PT)'
-                }
-            }],
-            yAxes: [{
-                display: true,
-                ticks: {
-                    fontSize: 10,
-                    min: 0,
-                    max: 100
-                },
-                
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Humidity (%)'
-                }}]
-                }
-                        
-        }
-        
-    };
-
-
-const H_wavex = document.getElementById('H_canvas').getContext('2d');
-const H_waveChart = new Chart(H_wavex,H_config );
-Chart.defaults.global.defaultFontSize = 14;
-
-var myChart = setInterval(H_function, 1000);
-
-function H_function(){
-    var getData = $.get('/historydata');
-    getData.done(function(results){
-        // 
-        var xv=results.yvalue
-        H_config.data.labels=results.Date;
-        H_config.data.datasets[0].data=results.HUMIDITY;
-        H_waveChart.update();
-        
-    });
-
-    }//end function			
-//------------------------------------------------------------------------ 
-
-
- //------------------------------------------------------------------------ 
- const BOX_config={
-                        
-    type: 'line',
-    data: {
-        
-        labels: [],
-        datasets: [{
-            radius: 1, 
-            label: "Electronic Box",
-            backgroundColor: 'rgb(145, 177, 191,0.5)',
-            borderColor: 'rgb(38, 27, 27)',
-            borderWidth: 1,
-            data: [],
-            
-            fill: false
-        },{
-            radius: 2, 
-            label: "SBC",
-            backgroundColor: 'rgb(38, 27, 27)',
-            borderColor: 'rgb(45, 51, 230)',
-            data: [],
-            fill: false,
-            borderWidth:0.5
-        }],
-    },
-    
-
-
-    options: {
-        responsive: true, 
-        // maintainAspectRatio: false,
-         
-        legend: {
-            display: true
-        },
-        title: {
-            display: false,
-            text: 'Temperature'
-        },
-        tooltips: {
-            mode: 'index',
-            intersect: true,
-        },
-        hover: {
-            mode: 'nearest',
-            intersect: true
-        },
-        plugins: {
-            datalabels: {
-                display:false,
-
-            },
-        
-        },
-
-     
-        scales: {
-            xAxes: [{
-                display: true,
-                ticks: {
-                    fontSize: 10,
-                    autoSkip: true,
-                    maxTicksLimit:15
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Date/time (Timezone - GMT, -4 ET, -7 PT)'
-                }
-            }],
-            yAxes: [{
-                display: true,
-                ticks: {
-                    fontSize: 10,
-                    min: 0,
-                    // max: 9
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Temperature (\u2103)'
-                }}]
-                }
-                        
-        }
-        
-    };
-
-
-const BOX_wavex = document.getElementById('BOX_canvas').getContext('2d');
-const BOX_waveChart = new Chart(BOX_wavex,BOX_config );
-Chart.defaults.global.defaultFontSize = 14;
-
-var myChart = setInterval(BOX_function, 1000);
-
-function BOX_function(){
-    var getData = $.get('/historydata');
-    getData.done(function(results){
-        // 
-        var xv=results.yvalue
-        BOX_config.data.labels=results.Date;
-        BOX_config.data.datasets[0].data=results.BOX_TEMP;
-        BOX_config.data.datasets[1].data=results.SBC_TEMP;
-        BOX_waveChart.update();
-        
-    });
-
-    }//end function			
-//------------------------------------------------------------------------ 
+//    ============================
  
+        
+    var myVar;
+
+    $('form#liveon').submit(function(event) {
+        socket.emit('liveon_request');
+        myVar=setInterval(updateWAVE, 800);
+        return false;
+    });
+
+    $('form#liveoff').submit(function(event) {
+        socket.emit('liveoff_request');
+        clearInterval(myVar);
+        return false;
+    });
+
+$('form#savere').submit(function(event) {
+socket.emit('save_request');
+return false;
+});
+
+$('form#check').submit(function(event) {
+   socket.emit('my_check_request', {checkbox: $('#checkbox').prop('checked')});
+   return false;
+   });
+
+
+
+$('form#emit').submit(function(event) {
+    // modbus connection script get the value from the input from in html
+    socket.emit('my_event_request', {data: $('#emit_data').val()});
+    return false;
+});
+
+
+
+
+$('form#broadcast').submit(function(event) {
+    socket.emit('my broadcast event', {data: $('#broadcast_data').val()});
+    return false;
+});
+
+
+$('form#sqlsend').submit(function(event)
+{
+    // SQL script
+    socket.emit('sqlsend_event_request', {data: $('#sqlsend_data').val()});
+    return false;
+});
+
+
+$('form#send').submit(function(event)
+{
+    // modbus write coil script
+    socket.emit('send_event_request', {data: $('#send_data').val()});
+    return false;
+});
+    
+ 
+
+socket.on('my_send_response', function(msg) {
+    $('#sendstate').html(msg.data);
+    });
+
+
+
+
+socket.on('my_count_response', function(msg) {
+    $('#countstate').html(msg.data);
+
+    });
+    
+
+socket.on('modbus_response', function(msg) {
+    var messageelement=msg.data;
+    $('#modbusstate').html(msg.data); 
+    if (messageelement === " On") {
+        var elem = document.getElementById('demo');
+        elem.style.color = 'green';
+        elem.style.fontWeight = '900';
+        elem.style.fontSize = '18px';
+        var elem = document.getElementById('demo').innerHTML = " Connected";
+    };
+    if (messageelement === " Off") {
+        var elem = document.getElementById('demo')
+        elem.style.color = 'red';
+        var elem = document.getElementById('demo').innerHTML = "";
+    };
+
+
+    });
+    
+
+
+$('form#database_emit').submit(function(event) {
+    socket.emit('dbevent_pyrequest', {dbdatauser: $('#database_data1').val(),dbdatapw: $('#database_data2').val()});
+    return false;
+});
+
+
+        socket.on('my_rate_response', function(msg) {
+            $('#_speed').html(msg._speed);
+            $('#_gain').html(msg._gain);
+            $('#_time_in').html(msg._time_in);
+            $('#_maxth').html(msg._maxth);
+            $('#_rate').html(msg._rate);
+            $('#_buffer').html(msg._buffer);
+            $('#_sel_channel').html(msg._sel_channel);
+            $('#_sel_amp').html(msg._sel_amp);
+            $('#_height1').html(msg._height1);
+            $('#_height2').html(msg._height2);
+            $('#_height3').html(msg._height3);
+            $('#_height4').html(msg._height4);
+            $('#_humidity').html(msg._humidity);
+            $('#_temp1').html(msg._temp1);
+            $('#_temp2').html(msg._temp2);
+            $('#_temp3').html(msg._temp3);
+            $('#_CNT_THRESHOLD').html(msg._CNT_THRESHOLD);
+        });
+
 
   
 });

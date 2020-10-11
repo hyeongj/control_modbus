@@ -13,183 +13,298 @@
 
 	<link rel="stylesheet" href="static/bootstrap.min.css">
 	<link rel="stylesheet" href="static/main.css">
- 
-	 <script type="text/javascript" src="static/Chart.js"></script>
-	 <script type="text/javascript" src="static/chartjs-plugin-datalabels.js"></script>
-
-	 <script type="text/javascript" src="static/jquery.min.js"></script>
-	 <script type="text/javascript" src="static/jquery.min.js"></script>
-      
-     <link rel="stylesheet" type="text/css" href="static/datatables.min.css"/>
-      <script type="text/javascript" src="static/datatables.min.js"></script>
-
+	  <script type="text/javascript" src="static/jquery.min.js"></script>
 	  <script type="text/javascript" src="static/socket.io.min.js"></script>		 
 	  <script type="text/javascript" charset="utf-8" src="static/amainjs.js"></script>
-	  <script src="static/popper.min.js"></script>
+
 	  <script src="static/bootstrap.min.js"></script>
- 
-
-
-	  
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
  
 </head>
+ 
 
-<div class="top-container">
-	<br>
-		<h1>ADVANCED HEALTH MONITORING OF STEAM PIPE SYSTEMS</h1>
-		<h2>Realtime Sensor Updates Ver.1.0</Ver> </h2>
-		<p>Local Date/Time: <span id="datetimenow"></span></p>
-		<p>GMT Date/Time: <span id="datetimeiso"></span></p>
+<div class="container">
+	<hr>
+	<h2> Modbus Connection & Device Control</h2>
 
-
-	<br> 
-</div>
+	<p class="fa fa-server fa-lg" id="demo"></p>
 	
- 
-<script>
-	
-
-function updateTime(){
-	var now = new Date(); // Fri Feb 20 2015 19:29:31 GMT+0530 (India Standard Time) 
-	var now_utc = new Date(now.toUTCString().slice(0, -4));
-	document.getElementById("datetimenow").innerHTML = now.toLocaleString();
-	document.getElementById("datetimeiso").innerHTML = now_utc.toLocaleString();
-	}
-
-	setInterval(updateTime, 1000);
-
-</script>
-
-
- 
-   <div class="container">
-	<br>
-	<h2> Sensor Data Table</h2>
-	<div class="card shadow mb-4">
-
- 	
-	{% for table in tables %}
-	{{ table|safe }}
-	{% endfor %}
-	<p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00).</p>
-	</div>	
-		<script>
-		$(document).ready(function() {
-		$('#sqltable').DataTable();
-		} );
-		</script>
- 
-	</div>
-
-  	
-
-
-		<div class="container">
-			<h2> Sensor Data Chart</h2>
-
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold"> Acoustic Sensor Data</h6>
-			
-				</div>
-				
-						<div class="card-body">
-
-							<canvas id="acanvas"  width="100%" height="40"></canvas>
-							
-						</div>
-					
-						<hr>
-					
-						<!-- <p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00). Filter the graph by selecting date from the date input.</p> -->
-				</div><!--end Card mb-4-->	
-			</div>
-
-		</div>
-
-
-	
-
-
-		<div class="container">
-	 
-
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold"> Acoustic Sensor Temperature Data</h6>
-			
-				</div>
-				
-						<div class="card-body">
-
-							<canvas id="TR_T_canvas"  width="100%" height="40"></canvas>
-							
-						</div>
-					
-						<hr>
-					
-						<!-- <p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00). Filter the graph by selecting date from the date input.</p> -->
-				</div><!--end Card mb-4-->	
-			</div>
-
-		</div>
-
-
-		<div class="container">
- 
-
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold"> Electronic Box Humidity Data</h6>
-			
-				</div>
-				
-						<div class="card-body">
-
-							<canvas id="H_canvas"  width="100%" height="40"></canvas>
-							
-						</div>
-					
-						<hr>
-					
-						<!-- <p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00). Filter the graph by selecting date from the date input.</p> -->
-				</div><!--end Card mb-4-->	
-			</div>
-
-		</div>
-
+	<div class="row">
 
 		
-		<div class="container">
- 
+		<div class = "col">
 
-			<div class="card shadow mb-4">
-				<div class="card-header py-3">
-					<h6 class="m-0 font-weight-bold"> Electronic Box Temperature Data</h6>
+			<form class="form-inline" id="emit" method="POST" action='#'>
+				<div class="form-group">
+					<input type="text" class="form-control" id="emit_data" placeholder="TCP/IP Address or URL">
+				  </div>
+				  <button type="submit" class="btn btn-secondary"><i class="fa fa-external-link" aria-hidden="true"></i></button>	  
+				</form>
 			
-				</div>
-				
-						<div class="card-body">
+			
+			
+			
+		</div>
+		<div class = "col">
 
-							<canvas id="BOX_canvas"  width="100%" height="40"></canvas>
-							
-						</div>
-					
-						<hr>
-					
-						<!-- <p class="text-muted" style="font-size: 12px; text-align: center;">Time Zone: GMT (EDT= GMT-04:00, PDT= GMT-07:00). Filter the graph by selecting date from the date input.</p> -->
-				</div><!--end Card mb-4-->	
+		<form class="form-inline" id="send" method="POST" action="#">
+			<div class="form-group">
+			  <input type="text" class="form-control" id="send_data" placeholder="REGISTER #">
+			</div>
+			<button type="submit" class="btn btn-secondary"><i class="fa fa-external-link" aria-hidden="true"></i></button>
+		  </form>
+
+		</div>
+
+	</div>
+	<p id="countstate">...</p>
+	<br>
+
+	<div class = "row">
+		
+		<div class = "col">
+			<form id="starton" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="starton"><i class="fa fa-repeat" aria-hidden="true"></i> READ</button>
+			</form>
+			<form id="init" method="POST" action='#'>
+				<button class="btn btn-secondary" input type="submit" name="submit" value="init"><i class="fa fa-repeat" aria-hidden="true"></i> Initialize</button>
+				</form>
+
+		</div>
+
+		<div class = "col">
+			<form id="sinterval0" method="POST" action='#'>
+				<button class="btn btn-secondary" input type="submit" name="submit" value="sinterval0"><i class="fa fa-arrow-up" aria-hidden="true"></i> Interval (+)</button>
+			</form>
+			<form id="sinterval1" method="POST" action='#'>
+				<button class="btn btn-secondary" input type="submit" name="submit" value="sinterval1"><i class="fa fa-arrow-down" aria-hidden="true"></i> Interval (-)</button>
+			</form>
 			</div>
 
+		<div class = "col">
+			<form id="gain0" method="POST" action='#'>
+				<button class="btn btn-secondary" input type="submit" name="submit" value="gain0"><i class="fa fa-arrow-up" aria-hidden="true"></i> Gain (+)</button>
+			</form>
+			<form id="gain1" method="POST" action='#'>	
+				<button class="btn btn-secondary" input type="submit" name="submit" value="gain1"><i class="fa fa-arrow-down" aria-hidden="true"></i> Gain (-)</button>
+			</form>
+		</div>
+
+		<div class = "col">
+			<form id="amp0" method="POST" action='#'>
+				<button class="btn btn-secondary" input type="submit" name="submit" value="amp0"><i class="fa fa-arrow-up" aria-hidden="true"></i> Amp. (+)</button>
+			</form>
+			<form id="amp1" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="amp1"><i class="fa fa-arrow-down" aria-hidden="true"></i> Amp. (-)</button>
+		</form>
+		</div>
+
+		<div class = "col">
+		<form id="ttime0" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="ttime0"><i class="fa fa-arrow-up" aria-hidden="true"></i> Time (+)</button>
+		</form>
+		<form id="ttime1" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="ttime1"><i class="fa fa-arrow-down" aria-hidden="true"></i> Time (-)</button>
+		</form>
 		</div>
 
 
 
+
+	</div>
+
+	<div class="container">
+		<br>
+		<div class = "row">
+			<form id="rate0" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="rate0"> RATE (50MHz)</button>
+			</form>
+			<form id="rate1" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="rate1"> RATE (25MHz)</button>
+		</form>
+		<form id="rate2" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="rate2"> RATE (12.5MHz)</button>
+		</form>
+		<form id="rate3" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="rate3"> RATE (6.25MHz)</button>
+		</form>
+		</div>
+	</div>
+
+	 
+
+	<div class="container">
+		<br>
+		<div class = "row">
+		<form id="graph" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="graph"> GRAPH ON</button>
+			</form>
+		<form id="graphoff" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="graphoff"> GRAPH OFF</button>
+			</form>
+		
+		<form id="REBOOT" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="REBOOT"> REBOOT</button>
+			</form>
+
+		</div>
+	</div>
+	
+	<div class="container">
+		<br>
+		<div class = "row">
+			<form id="ch0" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="ch0"> CH 0</button>
+			</form>
+			<form id="ch1" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="ch1"> CH 1</button>
+		</form>
+		<form id="ch2" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="ch2"> CH 2</button>
+		</form>
+		<form id="ch3" method="POST" action='#'>
+			<button class="btn btn-secondary" input type="submit" name="submit" value="ch3"> CH 3</button>
+		</form>
+		</div>
+	</div>
+	
+
  
 
 
+	<br>
+
+	<!-- <form id="testgg" method="POST" action='#'>
+		<button class="btn btn-secondary" input type="submit" name="submit" value="testgg"> testgg</button>
+	</form> -->
+
+	<p id="sendstate">...</p>
+	
+	<hr>
+
+
+	  <h2> Real Time Sensor Data Reading</h2>
+
+	<br>
+
+			<div class="container">
+
+				<p style="font-weight: bold; font-size:18px">System Information </p>
+				<div class="row">
+					<div class="col">
+						<p>Rate: </p>
+						<p id="_rate">...</p>
+					</div>
+
+					<div class="col">
+						<p>Saving interval: </p>
+						<p id="_CNT_THRESHOLD">...</p>
+					</div>
+					<div class="col">
+						<p>Buffer: </p>
+						<p id="_buffer">...</p>
+					</div>
+					<div class="col">
+						<p>Speed: </p>
+						<p id="_speed">...</p>
+					</div>
  
+				</div>
+			</div>
+
+			<div class="container">
+				<p style="font-weight: bold; font-size:18px">Pulser/Receiver </p>
+					<div class="row">
+								
+					<div class="col">
+						<p>Gain: </p>
+						<p id="_gain">...</p>
+					</div>
+
+					<div class="col">
+						<p>Thres. Time: </p>
+						<p id="_time_in">...</p>
+					</div>
+
+					<div class="col">
+						<p>Thres. Amp.: </p>
+						<p id="_maxth">...</p>
+					<div>
+					</div>
+				</div>
+
+
+			<div class="container">
+			<p style="font-weight: bold; font-size:18px">Pulser/Receiver (Height) </p>
+				<div class="row">
+
+					<div class="col">
+						<p>Channel1: </p>
+						<p id="_height1">...</p>
+					</div>
+
+					<div class="col">
+						<p>Channel2: </p>
+						<p id="_height2">...</p>
+					</div>
+
+					<div class="col">
+						<p>Channel3: </p>
+						<p id="_height3">...</p>	
+					</div>
+						
+					<div class="col">
+						<p>Channel4: </p>
+						<p id="_height4">...</p>
+					</div>
+		 
+
+				</div>
+			</div>
+			
+			
+
+
+			<div class="container">
+
+
+			<p style="font-weight: bold; font-size:18px">Temperature/Humidity </p>
+
+			<div class="row">
+				<div class="col">
+					<p>Humidity: </p>
+					<p id="_humidity">...</p>
+				</div>
+
+				<div class="col">
+					<p>Temp 1: </p>
+					<p id="_temp1">...</p>
+				</div>
+
+				<div class="col">
+					<p>Temp 2: </p>
+					<p id="_temp2">...</p>		
+				</div>
+					
+				<div class="col">
+					<p>Temp 3: </p>
+					<p id="_temp3">...</p>
+				</div>
+			</div>
+
+			<hr>				 
+		</div>  
+		
+ 
+
+
+
+ 
+ 
+
+</div><!-- end main -->
+
  
 		
 
