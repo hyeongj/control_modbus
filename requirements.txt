@@ -15,6 +15,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
 monotonic==1.5
+psycopg2-binary==2.8.6
 pyasn1==0.4.8
 PyHamcrest==2.0.2
 pymodbus==2.4.0
