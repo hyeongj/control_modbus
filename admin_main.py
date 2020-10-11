@@ -146,10 +146,10 @@ def test_message3(message):
 	
 	try:
 		modconnect(IP)
-		cli.read_input_registers(30001,1)
+		# cli.read_input_registers(30001,1)
 		BACKGROUND_READING=True
 		MODBUS_CONN=True
-		print(f"{IP} Connecting")
+		print(f"{IP} Connected")
 	except:
 		print(f"{IP} not Connected")
 		BACKGROUND_READING=False
