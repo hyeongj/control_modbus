@@ -3,7 +3,7 @@ $(document).ready(function(){
     namespace = '/test';
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
     
-    //------------------------------------------------------------------------ 
+    //---update-10/15--------------------------------------------------------------------- 
     
     $('form#starton').submit(function(event) {
         socket.emit('start_request');
