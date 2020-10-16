@@ -43,7 +43,7 @@ DIS='0.0.0.0'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(50)
-app.config['DEBUG'] = True 
+app.config['DEBUG'] = False 
 socketio = SocketIO(app)    
 # =====================================+
 
@@ -430,7 +430,7 @@ def get_requesth():
 	cli.write_coil(1037,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
-			{'data': 'Interval 100', 'count': session['receive_count']})
+			{'data': 'Interval 1000', 'count': session['receive_count']})
  
 
 
