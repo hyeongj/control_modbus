@@ -416,6 +416,18 @@ def get_request():
 
 
  
+# ====================================
+@socketio.on('sinterval10_request', namespace='/test')
+def get_requesth():
+	cli.write_coil(1037,0)  #1019 True	
+ 
+
+@socketio.on('sinterval1000_request', namespace='/test')
+def get_requesth():
+	cli.write_coil(1037,1)  #1019 True	
+ 
+
+
 
 
 # ==============GRAPH===================================================================

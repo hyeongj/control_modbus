@@ -55,6 +55,15 @@ $(document).ready(function(){
             return false;
             });	
 
+    $('form#sinterval10').submit(function(event) {
+        socket.emit('sinterval10_request');
+        return false;
+        });
+    $('form#sinterval1000').submit(function(event) {
+        socket.emit('sinterval1000_request');
+        return false;
+        });	
+
         // =======================
     $('form#rate0').submit(function(event) {
         socket.emit('rate0_request');
