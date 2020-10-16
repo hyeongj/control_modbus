@@ -420,11 +420,17 @@ def get_request():
 @socketio.on('sinterval10_request', namespace='/test')
 def get_requesth():
 	cli.write_coil(1037,0)  #1019 True	
+	session['receive_count'] = session.get('receive_count', 0) + 1
+	emit('my_send_response',
+			{'data': 'Interval 10', 'count': session['receive_count']})
  
 
 @socketio.on('sinterval1000_request', namespace='/test')
 def get_requesth():
 	cli.write_coil(1037,1)  #1019 True	
+	session['receive_count'] = session.get('receive_count', 0) + 1
+	emit('my_send_response',
+			{'data': 'Interval 100', 'count': session['receive_count']})
  
 
 
