@@ -1,8 +1,7 @@
 $(document).ready(function(){
 
     namespace = '/test';
-    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
-    
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);    
     //---update-10/15--------------------------------------------------------------------- 
     
     $('form#starton').submit(function(event) {
@@ -34,7 +33,6 @@ $(document).ready(function(){
         socket.emit('amp1_request');
         return false;
         });
-        
             
 
     $('form#ttime0').submit(function(event) {
@@ -115,8 +113,7 @@ $(document).ready(function(){
         socket.emit('ch3_request');
         return false;
         });
-
-        
+ 
 
     // ===========================================
     $('form#graph').submit(function(event) {
@@ -164,6 +161,7 @@ $(document).ready(function(){
         return false;
     });
  
+ //    ============================
  
 
 $('form#emit').submit(function(event) {
@@ -237,8 +235,6 @@ socket.on('modbus_response', function(msg) {
 
     });
     
-
-
 $('form#database_emit').submit(function(event) {
     socket.emit('dbevent_pyrequest', {dbdatauser: $('#database_data1').val(),dbdatapw: $('#database_data2').val()});
     return false;
