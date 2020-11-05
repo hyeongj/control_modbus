@@ -130,6 +130,12 @@ $(document).ready(function(){
         socket.emit('REBOOT_request');
         return false;
         });	
+    
+    $('form#POWEROFF').submit(function(event) {
+        socket.emit('POWEROFF_request');
+        return false;
+        });	
+        
         
     $('form#matplot').submit(function(event) {
         socket.emit('matplot_request');

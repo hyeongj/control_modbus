@@ -455,7 +455,14 @@ def get_requesth():
 @socketio.on('REBOOT_request', namespace='/test')
 def get_requesth():
 	cli.write_coil(1034,1)  #1019 True	
-	print("Arduino ON/OFF")
+	print("REBOOT")
+
+
+@socketio.on('POWEROFF_request', namespace='/test')
+def get_requesth():
+	cli.write_coil(1038,1)  #1019 True	
+	print("POWER OFF")
+
 
 @socketio.on('SQL_request', namespace='/test')
 def get_requesth():
