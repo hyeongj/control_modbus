@@ -84,7 +84,7 @@ def matplotimage():
 		plt.clf()
 		plt.title(f'Captured time : {gtime}')
 		plt.plot(xvalue, gwave,'k-', linewidth=0.5, label = f'Channel = {gchs}')
-		plt.grid(which='both', linestyle='-', linewidth='0.5', color='black')
+		# plt.grid(which='both', linestyle='-', linewidth='0.5', color='black')
 		plt.legend(loc=1)
 		plt.xlabel("Time (us)",fontsize="13")
 		plt.ylabel("Amplitude",fontsize="13")
@@ -102,10 +102,10 @@ def matplotimage():
 # ==============================================================
 @app.route('/')
 def base():
-	# global resultfig,SQL_CON
-	# engine = db.create_engine(DATABASE_URL)
-	# SQL_CON = engine.connect()
-	# resultfig=matplotimage()
+	global resultfig,SQL_CON
+	engine = db.create_engine(DATABASE_URL)
+	SQL_CON = engine.connect()
+	resultfig=matplotimage()
 	return render_template('index.html')
 
 ##==============================================
@@ -147,6 +147,10 @@ def BACKGROUND_PULSER():
 				MODBUS_GET=cli.read_holding_registers(40001,19)
 				socketio.sleep(1)
 				MODBUS_DATA=MODBUS_GET.registers
+
+				#temperature data from TRNAS
+				RTD_S1 = MODBUS_DATA[16]
+				RTD_S2 = MODBUS_DATA[17]
  
 				JSONDATA={'_speed':MODBUS_DATA[0], '_buffer':(MODBUS_DATA[2]-1)*100,'_time_in':MODBUS_DATA[1], '_maxth':MODBUS_DATA[3], '_gain':MODBUS_DATA[4], '_rate':MODBUS_DATA[5], 
 				'_sel_channel':MODBUS_DATA[8], '_sel_amp':MODBUS_DATA[9],  
@@ -253,7 +257,7 @@ def get_request():
 
 @socketio.on('init_request', namespace='/test')
 def get_request():
-	cli.write_coil(1011,0)  #1019 True	
+	cli.write_coil(1011,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Initialized', 'count': session['receive_count']})
@@ -261,49 +265,49 @@ def get_request():
 
 @socketio.on('gain0_request', namespace='/test')
 def get_request():
-	cli.write_coil(1012,0)  #1019 True	
+	cli.write_coil(1012,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Increase gain', 'count': session['receive_count']})
 
 @socketio.on('gain1_request', namespace='/test')
 def get_request():
-	cli.write_coil(1013,0)  #1019 True	
+	cli.write_coil(1013,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Lower gain', 'count': session['receive_count']})
 
 @socketio.on('amp0_request', namespace='/test')
 def get_request():
-	cli.write_coil(1014,0)  #1019 True	
+	cli.write_coil(1014,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Increase threshold amplitude', 'count': session['receive_count']})
 
 @socketio.on('amp1_request', namespace='/test')
 def get_request():
-	cli.write_coil(1015,0)  #1019 True	
+	cli.write_coil(1015,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Lower threshold amplitude', 'count': session['receive_count']})
 
 @socketio.on('ttime0_request', namespace='/test')
 def get_request():
-	cli.write_coil(1016,0)  #1019 True	
+	cli.write_coil(1016,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Increase threshold time', 'count': session['receive_count']})
  
 @socketio.on('ttime1_request', namespace='/test')
 def get_requesth():
-	cli.write_coil(1017,0)  #1019 True	
+	cli.write_coil(1017,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Lower threshold time', 'count': session['receive_count']})
 
 @socketio.on('sinterval0_request', namespace='/test')
 def get_request():
-	cli.write_coil(1035,0)  #1019 True	
+	cli.write_coil(1035,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Increase interval', 'count': session['receive_count']})
@@ -317,28 +321,28 @@ def get_requesth():
 
 @socketio.on('rate0_request', namespace='/test')
 def get_request():
-	cli.write_coil(1003,0)  #1019 True
+	cli.write_coil(1003,1)  #1019 True
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Rate = 50 MHz', 'count': session['receive_count']})
 
 @socketio.on('rate1_request', namespace='/test')
 def get_request():
-	cli.write_coil(1004,0)  #1019 True
+	cli.write_coil(1004,1)  #1019 True
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Rate = 25 MHz', 'count': session['receive_count']})
 
 @socketio.on('rate2_request', namespace='/test')
 def get_request():
-	cli.write_coil(1005,0)  #1019 True
+	cli.write_coil(1005,1)  #1019 True
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Rate = 12.5 MHz', 'count': session['receive_count']})
 
 @socketio.on('rate3_request', namespace='/test')
 def get_request():
-	cli.write_coil(1006,0)  #1019 True	
+	cli.write_coil(1006,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'Rate = 6.25 MHz', 'count': session['receive_count']})
@@ -346,28 +350,28 @@ def get_request():
 
 @socketio.on('BUFFER0_request', namespace='/test')
 def get_request():
-	cli.write_coil(1026,0)  #1019 True
+	cli.write_coil(1026,1)  #1019 True
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'BUFFER = 1000', 'count': session['receive_count']})
 
 @socketio.on('BUFFER1_request', namespace='/test')
 def get_request():
-	cli.write_coil(1027,0)  #1019 True
+	cli.write_coil(1027,1)  #1019 True
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'BUFFER = 2000', 'count': session['receive_count']})
 
 @socketio.on('BUFFER2_request', namespace='/test')
 def get_request():
-	cli.write_coil(1028,0)  #1019 True
+	cli.write_coil(1028,1)  #1019 True
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'BUFFER = 4000', 'count': session['receive_count']})
 
 @socketio.on('BUFFER3_request', namespace='/test')
 def get_request():
-	cli.write_coil(1029,0)  #1019 True	
+	cli.write_coil(1029,1)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
 			{'data': 'BUFFER = 8000', 'count': session['receive_count']})
@@ -377,41 +381,45 @@ def get_request():
 @socketio.on('ch0_request', namespace='/test')
 def get_request():
 	ad = "CH0"
-	cli.write_coil(1007,0)  #1019 True
+	cli.write_coil(1007,1)  #1019 True
+	cli.write_coil(1024,1)
 	cli.write_coil(1036,0)  #1019 True
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
-			{'data': '"%s" SAVED'%ad, 'count': session['receive_count']})
+			{'data': '"%s" Select '%ad, 'count': session['receive_count']})
  
  
 @socketio.on('ch1_request', namespace='/test')
 def get_request():
 	ad = "CH1"
-	cli.write_coil(1008,0)  #1019 True
+	cli.write_coil(1008,1)  #1019 True
+	cli.write_coil(1024,1)
 	cli.write_coil(1036,0)  #1019 True
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
-			{'data': '"%s" SAVED'%ad, 'count': session['receive_count']})
+			{'data': '"%s" Select '%ad, 'count': session['receive_count']})
  
 
 @socketio.on('ch2_request', namespace='/test')
 def get_request():
 	ad = "CH2"
-	cli.write_coil(1009,0)  #1019 True
+	cli.write_coil(1009,1)  #1019 True
+	cli.write_coil(1024,1)
 	cli.write_coil(1036,0)  #1019 True
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	emit('my_send_response',
-			{'data': '"%s" SAVED'%ad, 'count': session['receive_count']})
+			{'data': '"%s" Select '%ad, 'count': session['receive_count']})
  
 
 @socketio.on('ch3_request', namespace='/test')
 def get_request():
 	ad = "CH3"
-	cli.write_coil(1010,0)  #1019 True
+	cli.write_coil(1010,1)  #1019 True
+	cli.write_coil(1024,1)
 	cli.write_coil(1036,0)  #1019 True	
 	session['receive_count'] = session.get('receive_count', 0) + 1
 	socketio.emit('my_send_response',
-			{'data': '"%s" SAVED'%ad, 'count': session['receive_count']})
+			{'data': '"%s" Select '%ad, 'count': session['receive_count']})
  
 
 
@@ -440,16 +448,14 @@ def get_requesth():
 
 @socketio.on('graph_request', namespace='/test')
 def get_requesth():
-	global LIVEGRAPH
-	LIVEGRAPH=True
-	cli.write_coil(1024,0)  #1019 True	
+ 
+	cli.write_coil(1024,1)  #1019 True	
 	print("graph on")
  
 @socketio.on('graphoff_request', namespace='/test')
 def get_requesth():
-	global LIVEGRAPH
-	LIVEGRAPH=False
-	cli.write_coil(1025,0)  #1019 True	
+ 
+	cli.write_coil(1025,1)  #1019 True	
 	print("graph off")
 
 @socketio.on('REBOOT_request', namespace='/test')
