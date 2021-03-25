@@ -69,7 +69,7 @@ def matplotimage():
 		gtime=tmp[0]
 		gchs=tmp[1]
 		rate=tmp[2]
-		gwave=np.frombuffer(tmp[3], dtype="Int8")
+		gwave=np.frombuffer(tmp[3], dtype="uint8")
 		crate=50
 
 		if rate == 0:
