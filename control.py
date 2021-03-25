@@ -3,14 +3,14 @@ import time
 
 
 iIP ='127.0.0.1' 
-iIP ='192.168.1.42' 
+# iIP ='192.168.1.42' 
 
 def modconnect(IP):
 	PORT=1502
 	cli = ModbusClient(host=IP, port=PORT)
 	return cli
 
-print("Hello")
+ 
 try: 
 	cli=modconnect(iIP)
 	print("Connected")
@@ -21,10 +21,12 @@ x=9
 
 while x!=0:
 	x= input("Enter MODBUS Commend? ")
-	print(type(x),x)
 	x=int(x)
-	if x>1000 and x<2000:
+	if x>1000 and x<1030:
 		cli.write_coil(x,1)
+	if x>1030 and x<1040:
+		y=input("enter 0 or 1?")
+		cli.write_coil(x,y)
 	if x==3000:
 		MODBUS_GET=cli.read_holding_registers(40001,19)
 		time.sleep(0.5)
@@ -43,6 +45,8 @@ while x!=0:
 		tof = 1e6*2*JSONDATA["_height1"]*0.0254/JSONDATA["_speed"]
 
 		print(f'Buffer: {JSONDATA["_buffer"]}')
+		print(f'Threshold Amp: {JSONDATA["_maxth"]}')
+		print(f'Select Amp: {JSONDATA["_sel_amp"]}')
 		print(f'Threshold time: {JSONDATA["_time_in"]}')
 		print(f'RATE: {JSONDATA["_rate"]}')
 		print(f'TR1 TOF: {tof} us')
