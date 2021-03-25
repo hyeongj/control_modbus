@@ -4,14 +4,14 @@ from flask_socketio import SocketIO, emit, disconnect
 import os, sys, time
 import json 
 from pymodbus.client.sync import ModbusTcpClient as ModbusClient
-import numpy as np
-import matplotlib.pylab as plt
+# import numpy as np
+# import matplotlib.pylab as plt
 import eventlet
 eventlet.monkey_patch() 
 
 import sqlalchemy as db
-from io import BytesIO
-import base64
+# from io import BytesIO
+# import base64
 #===global variables==============================
 POSTGRES = {
     'user': 'coned_postgres',
@@ -24,6 +24,7 @@ DATABASE_URL='postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 
 '''
 Update Mar25 2021
+remove matplotlib
 git control_modbus
 https://github.com/hyeongj/control_modbus.git
 '''
@@ -48,7 +49,7 @@ DIS='0.0.0.0'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(50)
-app.config['DEBUG'] = False 
+app.config['DEBUG'] = True 
 socketio = SocketIO(app)    
 # =====================================+
 
@@ -57,60 +58,64 @@ def modconnect(IP):
 	PORT=1502
 	cli = ModbusClient(host=IP, port=PORT)
 
-def matplotimage():
-	global SQL_CON,JSONDATA
-	if SQL_CON!=None:	
-		# select last column of waveform data
-		cmd = 'SELECT "TIME_CREATED", "CHS", "RATE", "WAVEFORM" from tbconed WHERE "WAVEFORM" IS NOT NULL ORDER BY ID DESC LIMIT 1;' 
-		result=SQL_CON.execute(cmd)
-		for row in result:
-			tmp=row
+# def matplotimage():
+# 	global SQL_CON,JSONDATA
+# 	if SQL_CON!=None:	
+# 		# select last column of waveform data
+# 		cmd = 'SELECT "TIME_CREATED", "CHS", "RATE", "WAVEFORM" from tbconed WHERE "WAVEFORM" IS NOT NULL ORDER BY ID DESC LIMIT 1;' 
+# 		result=SQL_CON.execute(cmd)
+# 		for row in result:
+# 			tmp=row
 
-		gtime=tmp[0]
-		gchs=tmp[1]
-		rate=tmp[2]
-		gwave=np.frombuffer(tmp[3], dtype="uint8")
-		crate=50
+# 		gtime=tmp[0]
+# 		gchs=tmp[1]
+# 		rate=tmp[2]
+# 		gwave=np.frombuffer(tmp[3], dtype="uint8")
+# 		crate=50
 
-		if rate == 0:
-			crate = 50
-		if rate == 1:
-			crate = 25
-		if rate == 2:
-			crate = 12.5
-		if rate == 3:
-			crate = 6.25
+# 		if rate == 0:
+# 			crate = 50
+# 		if rate == 1:
+# 			crate = 25
+# 		if rate == 2:
+# 			crate = 12.5
+# 		if rate == 3:
+# 			crate = 6.25
 
-		buffer = len(gwave)
-		xvalue = [x/crate for x in range(buffer)]
+# 		buffer = len(gwave)
+# 		xvalue = [x/crate for x in range(buffer)]
 		
 
-		plt.figure(figsize=(13,4.5))
-		plt.clf()
-		plt.title(f'Captured time : {gtime}')
-		plt.plot(xvalue, gwave,'k-', linewidth=0.5, label = f'Channel = {gchs}')
-		# plt.grid(which='both', linestyle='-', linewidth='0.5', color='black')
-		plt.legend(loc=1)
-		plt.xlabel("Time (us)",fontsize="13")
-		plt.ylabel("Amplitude",fontsize="13")
+# 		plt.figure(figsize=(13,4.5))
+# 		plt.clf()
+# 		plt.title(f'Captured time : {gtime}')
+# 		plt.plot(xvalue, gwave,'k-', linewidth=0.5, label = f'Channel = {gchs}')
+# 		# plt.grid(which='both', linestyle='-', linewidth='0.5', color='black')
+# 		plt.legend(loc=1)
+# 		plt.xlabel("Time (us)",fontsize="13")
+# 		plt.ylabel("Amplitude",fontsize="13")
 
-		figfile = BytesIO()
-		plt.savefig(figfile, format='png')
-		figfile.seek(0)  # rewind to beginning of file
-		figdata_png = figfile.getvalue()  # extract string (stream of bytes)
+# 		figfile = BytesIO()
+# 		plt.savefig(figfile, format='png')
+# 		figfile.seek(0)  # rewind to beginning of file
+# 		figdata_png = figfile.getvalue()  # extract string (stream of bytes)
 		
-		figdata_png = base64.b64encode(figdata_png)
+# 		figdata_png = base64.b64encode(figdata_png)
 		
-		return figdata_png
+# 		return figdata_png
 
 
 # ==============================================================
 @app.route('/')
 def base():
-	global resultfig,SQL_CON
+	global SQL_CON
 	engine = db.create_engine(DATABASE_URL)
 	SQL_CON = engine.connect()
-	resultfig=matplotimage()
+	try: 
+		modconnect('127.0.0.1')
+	except:
+		print("Not connected!")
+	# resultfig=matplotimage()
 	return render_template('index.html')
 
 ##==============================================
@@ -446,57 +451,7 @@ def get_requesth():
 			{'data': 'Interval 1000', 'count': session['receive_count']})
  
 
-
-
-
-# ==============GRAPH===================================================================
-
-@socketio.on('graph_request', namespace='/test')
-def get_requesth():
  
-	cli.write_coil(1024,1)  #1019 True	
-	print("graph on")
- 
-@socketio.on('graphoff_request', namespace='/test')
-def get_requesth():
- 
-	cli.write_coil(1025,1)  #1019 True	
-	print("graph off")
-
-@socketio.on('REBOOT_request', namespace='/test')
-def get_requesth():
-	cli.write_coil(1034,1)  #1019 True	
-	print("REBOOT")
-
-
-@socketio.on('POWEROFF_request', namespace='/test')
-def get_requesth():
-	cli.write_coil(1038,1)  #1019 True	
-	print("POWER OFF")
-
-
-@socketio.on('SQL_request', namespace='/test')
-def get_requesth():
-	global CON, SQL_CON
-	engine = db.create_engine(DATABASE_URL)
-	SQL_CON = engine.connect()
- 
-	 
-@socketio.on('SQL_d_request', namespace='/test')
-def get_requesth():
-	global CON, SQL_CON
-	SQL_CON.close()
-	SQL_CON = None
-	
-@socketio.on('matplot_request', namespace='/test')
-def get_sqlrequesth():
-	resultfig=matplotimage()
-	resultfig=resultfig.decode('utf8')
-	socketio.emit('my_sql_response',{'data': resultfig },namespace='/test')
-
-	 
- 
-
 #=================================================
 if __name__ == '__main__':
 	socketio.run(app,host='0.0.0.0', port=5000)
