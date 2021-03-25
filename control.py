@@ -2,6 +2,7 @@ from pymodbus.client.sync import ModbusTcpClient as ModbusClient
 import time
 
 
+
 iIP ='127.0.0.1' 
 # iIP ='192.168.1.42' 
 
@@ -44,6 +45,7 @@ while x!=0:
 				}
 		tof = 1e6*2*JSONDATA["_height1"]*0.0254/JSONDATA["_speed"]
 
+		print(f'SEL CHANNEL: {JSONDATA["_sel_channel"]}')
 		print(f'Buffer: {JSONDATA["_buffer"]}')
 		print(f'Threshold Amp: {JSONDATA["_maxth"]}')
 		print(f'Select Amp: {JSONDATA["_sel_amp"]}')
