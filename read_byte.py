@@ -1,11 +1,10 @@
 import numpy as np
 import matplotlib.pylab as plt
 
-f=open("output","rb")
+f=open("C:\Users\JPL\Desktop\deploy_coned\boutput.dat","rb")
 byte = f.read()
 f.close()
  
-print(byte)
 
 y=np.frombuffer(byte, np.uint8)
 
