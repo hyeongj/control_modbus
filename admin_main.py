@@ -22,6 +22,11 @@ POSTGRES = {
 }
 DATABASE_URL='postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 
+'''
+Update Mar25 2021
+git control_modbus
+https://github.com/hyeongj/control_modbus.git
+'''
 
 
 # ========================================
@@ -36,7 +41,7 @@ THREAD = None
 SQL_CON=None 
 cli = None
 CON = "SQL SERVER NOT CONNECTED"
-DEMO='172.16.81.133'
+DEMO='127.0.0.1'
 DIS='0.0.0.0'
  
 # ========================================
