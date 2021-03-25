@@ -7,9 +7,8 @@ f.close()
  
 print(byte)
 
-y=np.frombuffer(byte,np.uint8)
+y=np.frombuffer(byte, np.uint8)
 
-print(y)
-
+plt.figure(1)
 plt.plot(y)
 plt.show()
