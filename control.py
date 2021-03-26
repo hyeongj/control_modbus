@@ -52,7 +52,7 @@ while x!=0:
 		print(f'CHANNEL: {JSONDATA["_sel_channel"]}')
 		print(f'RATE, Buffer: {JSONDATA["_rate"]}, {JSONDATA["_buffer"]}')
 		print(f'Threshold Time / Amp: {JSONDATA["_time_in"]} / {JSONDATA["_maxth"]}')
-		print(f'Select ToF / Amp: {tof1]} / {JSONDATA["_sel_amp"]}')
+		print(f'Select ToF / Amp: {tof1} / {JSONDATA["_sel_amp"]}')
 		print(f'ToFs: {tof1,tof2,tof3,tof4]} us')
 		print(f'TR1 Height: {JSONDATA["_height1"],JSONDATA["_height2"],JSONDATA["_height3"],JSONDATA["_height4"]}  inch')
 		print(f'Humidity: {JSONDATA["_humidity"]} %')
