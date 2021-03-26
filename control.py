@@ -24,6 +24,22 @@ x=9
 while x!=0:
 	x= input("Enter MODBUS Commend? ")
 	x=int(x)
+	if x==11:
+		print("Plot Ch 1")
+		cli.write_coil(1007,1)
+		cli.write_coil(1024,1)
+	if x==12:
+		print("Plot Ch 2")
+		cli.write_coil(1008,1)
+		cli.write_coil(1024,1)
+	if x==13:
+		print("Plot Ch 3")
+		cli.write_coil(1009,1)
+		cli.write_coil(1024,1)
+	if x==14:
+		print("Plot Ch 4")
+		cli.write_coil(1010,1)
+		cli.write_coil(1024,1)
 	if x>1000 and x<1030:
 		cli.write_coil(x,1)
 	if x>1030 and x<1040:
