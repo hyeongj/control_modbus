@@ -44,6 +44,8 @@ while x!=0:
 		cli.write_coil(x,1)
 	if x>1030 and x<1040:
 		y=input("enter 0 or 1?")
+		y=int(y)
+		print(x,y)
 		cli.write_coil(x,y)
 	if x==3000:
 		MODBUS_GET=cli.read_holding_registers(40001,19)
@@ -65,7 +67,8 @@ while x!=0:
 		# tof3 = 1e6*2*JSONDATA["_height3"]*0.0254/JSONDATA["_speed"]
 		# tof4 = 1e6*2*JSONDATA["_height4"]*0.0254/JSONDATA["_speed"]
 
-		print(f'CHANNEL: {JSONDATA["_sel_channel"]}')
+		print(f'CHANNEL: {JSONDATA["_CNT_THRESHOLD"]}')
+		print(f'SAVE CNT: {JSONDATA["_sel_channel"]}')
 		print(f'RATE, Buffer: {JSONDATA["_rate"]}, {JSONDATA["_buffer"]}')
 		print(f'Threshold Time / Amp: {JSONDATA["_time_in"]} / {JSONDATA["_maxth"]}')
 		print(f'TR1 Height: {JSONDATA["_height1"],JSONDATA["_height2"],JSONDATA["_height3"],JSONDATA["_height4"]}  inch')
