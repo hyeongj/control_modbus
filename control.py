@@ -44,21 +44,20 @@ while x!=0:
 					'_humidity':MODBUS_DATA[15],  '_temp1':MODBUS_DATA[14],  '_temp2':MODBUS_DATA[16],  '_temp3':MODBUS_DATA[17],
 					 '_CNT_THRESHOLD':MODBUS_DATA[18]
 				}
-		tof = 1e6*2*JSONDATA["_height1"]*0.0254/JSONDATA["_speed"]
+		tof1 = 1e6*2*JSONDATA["_height1"]*0.0254/JSONDATA["_speed"]
+		tof2 = 1e6*2*JSONDATA["_height2"]*0.0254/JSONDATA["_speed"]
+		tof3 = 1e6*2*JSONDATA["_height3"]*0.0254/JSONDATA["_speed"]
+		tof4 = 1e6*2*JSONDATA["_height4"]*0.0254/JSONDATA["_speed"]
 
-		print(f'SEL CHANNEL: {JSONDATA["_sel_channel"]}')
-		print(f'Buffer: {JSONDATA["_buffer"]}')
-		print(f'Threshold Amp: {JSONDATA["_maxth"]}')
-		print(f'Select Amp: {JSONDATA["_sel_amp"]}')
-		print(f'Threshold time: {JSONDATA["_time_in"]}')
-		print(f'RATE: {JSONDATA["_rate"]}')
-		print(f'TR1 TOF: {tof} us')
-		print(f'TR1 Height: {JSONDATA["_height1"]}  inch')
+		print(f'CHANNEL: {JSONDATA["_sel_channel"]}')
+		print(f'RATE, Buffer: {JSONDATA["_rate"]}, {JSONDATA["_buffer"]}')
+		print(f'Threshold Time / Amp: {JSONDATA["_time_in"]} / {JSONDATA["_maxth"]}')
+		print(f'Select ToF / Amp: {tof1]} / {JSONDATA["_sel_amp"]}')
+		print(f'ToFs: {tof1,tof2,tof3,tof4]} us')
+		print(f'TR1 Height: {JSONDATA["_height1"],JSONDATA["_height2"],JSONDATA["_height3"],JSONDATA["_height4"]}  inch')
 		print(f'Humidity: {JSONDATA["_humidity"]} %')
-		print(f'Box Temp: {JSONDATA["_temp1"]}')
-		print(f'TR1 Temp: {JSONDATA["_temp2"]}')
-		print(f'TR2 Temp: {JSONDATA["_temp3"]}')
-
+		print(f'Box, TR1, TR2 Temp: {JSONDATA["_temp1"],JSONDATA["_temp2"],JSONDATA["_temp3"]}')
+		
 
 '''
 select
