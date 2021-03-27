@@ -68,8 +68,9 @@ while x!=0:
 		# tof4 = 1e6*2*JSONDATA["_height4"]*0.0254/JSONDATA["_speed"]
 
 		print(f'CHANNEL: {JSONDATA["_CNT_THRESHOLD"]}')
-		print(f'SAVE CNT: {JSONDATA["_sel_channel"]}')
 		print(f'RATE, Buffer: {JSONDATA["_rate"]}, {JSONDATA["_buffer"]}')
+		print(f'SAVE CNT: {JSONDATA["_sel_channel"]}')
+		print(f'Select Amp: {JSONDATA["_sel_amp"]}')
 		print(f'Threshold Time / Amp: {JSONDATA["_time_in"]} / {JSONDATA["_maxth"]}')
 		print(f'TR1 Height: {JSONDATA["_height1"],JSONDATA["_height2"],JSONDATA["_height3"],JSONDATA["_height4"]}  inch')
 		print(f'Humidity: {JSONDATA["_humidity"]} %')
