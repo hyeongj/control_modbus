@@ -42,9 +42,9 @@ while x!=0:
 		cli.write_coil(1024,1)
 	if x>1000 and x<1030:
 		cli.write_coil(x,1)
-	if x>=1040 and x<1042:
+	if x>=1038 and x<1040:
 		cli.write_coil(x,1)
-	if x>1030 and x<1040:
+	if x>1030 and x<1038:
 		y=input("enter 0 or 1?")
 		y=int(y)
 		print(x,y)
