@@ -51,7 +51,7 @@ while x!=0:
 		cli.write_coil(x,y)
 
 	if x==3000:
-		MODBUS_GET=cli.read_holding_registers(40001,20)
+		MODBUS_GET=cli.read_holding_registers(40001,19)
 		time.sleep(0.5)
 		MODBUS_DATA=MODBUS_GET.registers
 		'''
@@ -63,14 +63,14 @@ while x!=0:
 					 '_rate':MODBUS_DATA[5], '_sel_channel':MODBUS_DATA[8], '_sel_amp':MODBUS_DATA[9],  
 					'_height1':MODBUS_DATA[10]/10,  '_height2':MODBUS_DATA[11]/10,  '_height3':MODBUS_DATA[12]/10,  '_height4':MODBUS_DATA[13]/10,
 					'_humidity':MODBUS_DATA[15],  '_temp1':MODBUS_DATA[14],  '_temp2':MODBUS_DATA[16],  '_temp3':MODBUS_DATA[17],
-					 '_CNT_THRESHOLD':MODBUS_DATA[18],'_PULSEWIDTH':MODBUS_DATA[19]
+					 '_CNT_THRESHOLD':MODBUS_DATA[18]
 				}
 		# tof1 = 1e6*2*JSONDATA["_height1"]*0.0254/JSONDATA["_speed"]
 		# tof2 = 1e6*2*JSONDATA["_height2"]*0.0254/JSONDATA["_speed"]
 		# tof3 = 1e6*2*JSONDATA["_height3"]*0.0254/JSONDATA["_speed"]
 		# tof4 = 1e6*2*JSONDATA["_height4"]*0.0254/JSONDATA["_speed"]
 
-		print(f'CHANNEL, PULSE WIDTH: {JSONDATA["_sel_channel"],JSONDATA["_PULSEWIDTH"]}')
+		print(f'CHANNEL: {JSONDATA["_sel_channel"]}')
 		print(f'SAVE CNT: {JSONDATA["_CNT_THRESHOLD"]}')
 		print(f'Select Amp: {JSONDATA["_sel_amp"]}')
 		print(f'RATE, Buffer: {JSONDATA["_rate"]}, {JSONDATA["_buffer"]}')
